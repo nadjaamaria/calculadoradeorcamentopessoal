@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Orçamento Pessoal</title>
+  <style>
+   
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background-color: #f9f9f9;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-left: 5px solid #28a745;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora de Orçamento Pessoal</h1>
+
+    <form id="expense-form">
+      <input type="text" id="descricao" placeholder="Descrição" required />
+      <input type="number" id="valor" placeholder="Valor (R$)" step="0.01" required />
+      <input type="date" id="data" required />
+      <button type="submit">Adicionar Despesa</button>
+    </form>
+
+    <h2>Total Mensal: R$ <span id="total">0.00</span></h2>
+
+    <h2>Lista de Despesas</h2>
+    <ul id="expense-list"></ul>
+  </div>
+
+  <script>
+    
+    const form = document.getElementById('expense-form');
+    const descricaoInput = document.getElementById('descricao');
+    const valorInput = document.getElementById('valor');
+    const dataInput = document.getElementById('data');
+    const expenseList = document.getElementById('expense-list');
+    const totalSpan = document.getElementById('total');
+
+    let despesas = [];
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const descricao = descricaoInput.value;
+      const valor = parseFloat(valorInput.value);
+      const data = dataInput.value;
+
+      if (!descricao || isNaN(valor) || !data) {
+        alert('Preencha todos os campos corretamente.');
+        return;
+      }
+
+      const despesa = {
+
+
+        id: Date.now(),
+        descricao,
+        valor,
+        data
+      };
+
+      despesas.push(despesa);
+      atualizarInterface();
+
+      descricaoInput.value = '';
+      valorInput.value = '';
+      dataInput.value = '';
+    });
+
+    function atualizarInterface() {
+      expenseList.innerHTML = '';
+      let total = 0;
+
+      despesas.forEach((item) => {
+        total += item.valor;
+
+        const li = document.createElement('li');
+        li.textContent = `${item.descricao} - R$ ${item.valor.toFixed(2)} em ${formatarData(item.data)}`;
+        expenseList.appendChild(li);
+      });
+
+      totalSpan.textContent = total.toFixed(2);
+    }
+
+    function formatarData(dataStr) {
+      const data = new Date(dataStr);
+      return data.toLocaleDateString('pt-BR');
+    }
+  </script>
+</body>
+</html>
