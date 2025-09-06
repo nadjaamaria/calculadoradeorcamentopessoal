@@ -23,4 +23,4 @@ Uso de Props: Passagem de dados e funções entre componentes (comunicação ent
 Renderização Condicional: Implementação de lógicas para exibir elementos da UI com base nos estados atuais da aplicação.
 
 # Acesse o projeto aqui
-[ (adicione o link do projeto quando disponível)](https://nadjaamaria.github.io/calculadoradeorcamentopessoal/)
+[ (Calculadora Pessoal)](https://nadjaamaria.github.io/calculadoradeorcamentopessoal/)
